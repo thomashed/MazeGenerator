@@ -18,4 +18,13 @@ public class MazeLogic {
         
     }
     
+    private void fillMaze(){
+        for (int row = 0; row < maze.length; row++) {
+            for (int col = 0; col < maze[0].length; col++) {
+                maze[row][col] = '-';
+            }
+        }
+    }    
+    
+    
 }
