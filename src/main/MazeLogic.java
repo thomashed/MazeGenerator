@@ -25,9 +25,8 @@ public class MazeLogic {
     // Methods
     public void run() {
         fillMaze();
-        makePath(); 
-        printMaze(); 
-        
+        makePath();
+        printMaze();
     }
 
     private void fillMaze() {
@@ -48,14 +47,14 @@ public class MazeLogic {
         }
     }
 
-    private boolean isPlaceValid() {
+    public boolean isPlaceValid() {
         if ((rowValue - 1) == 0 || (colValue - 1) == 0 || (colValue + 1) == 19) {
             return false;
         }
         return true;
     }
-    
-    private void resetData(){
+
+    private void resetData() {
         maze = null;
     }
 
@@ -95,29 +94,43 @@ public class MazeLogic {
     // MoveMethods
     private void moveUp() {
         if (isPlaceValid()) {
-            rowValue = rowValue - 1;
-            placePath();
+            if (checkSurroundingsUp()) {
+                rowValue = rowValue - 1;
+                placePath();
+            } else {
+                // ChangeDirection
+            }
         }
     }
 
     private void moveRight() {
         if (isPlaceValid()) {
-            colValue = colValue + 1;
-            placePath();
+            if (checkSurroundingsRight()) {
+                colValue = colValue + 1;
+                placePath();
+            } else {
+                // ChangeDirection
+            }
         }
     }
 
     private void moveDown() {
         if (isPlaceValid()) {
-            rowValue = rowValue + 1;
-            placePath();
+            if (checkSurroundingsDown()) {
+                rowValue = rowValue + 1;
+                placePath();
+            } else {
+                // ChangeDirection
+            }
         }
     }
 
     private void moveLeft() {
         if (isPlaceValid()) {
-            colValue = colValue - 1;
-            placePath();
+            if (checkSurroundingsLeft()) {
+                colValue = colValue - 1;
+                placePath();
+            }
         }
     }
 
