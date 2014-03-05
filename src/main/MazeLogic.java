@@ -8,15 +8,29 @@ public class MazeLogic {
     Random r;
 
     char[][] maze;
+    char path;
+
+    int rowValue;
+    int colValue;
 
     // Constructor
     public MazeLogic() {
-        this.maze = new char[10][10];
+        this.maze = new char[20][20];
+
+        this.path = '0';
+        this.rowValue = 4;
+        this.colValue = 4;
     }
 
     // Methods
     public void run() {
         fillMaze();
+        
+        for (int i = 0; i < 5; i++) {
+            moveLeft();
+        }
+        
+        
         printMaze();
     }
 
@@ -38,23 +52,44 @@ public class MazeLogic {
         }
     }
 
-    private void pathReady(){
-    
+    private boolean isPlaceValid() {
+        if ((rowValue - 1) == 0 || (colValue - 1) == 0 || (colValue + 1) == 19) {
+            return false;
+        }
+        return true;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    // MoveMethods
+    private void moveUp() {
+        if (isPlaceValid()) {
+            rowValue = rowValue - 1;
+            placePath();
+        }
+    }
+
+    private void moveRight() {
+        if (isPlaceValid()) {
+            colValue = colValue + 1;
+            placePath();
+        }
+    }
+
+    private void moveDown() {
+        if (isPlaceValid()) {
+            rowValue = rowValue + 1;
+            placePath();
+        }
+    }
+
+    private void moveLeft() {
+        if (isPlaceValid()) {
+            colValue = colValue - 1;
+            placePath();
+        }
+    }
+
+    private void placePath() {
+        maze[rowValue][colValue] = path;
+    }
+
 }
