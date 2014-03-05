@@ -24,7 +24,13 @@ public class MazeLogic {
                 maze[row][col] = '-';
             }
         }
-    }    
+    }
+    
+    
+    
+    
+    
+    
     
     
 }
