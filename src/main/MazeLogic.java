@@ -5,10 +5,9 @@ import java.util.Random;
 public class MazeLogic {
 
     // Fields
-    Random r;
-
     char[][] maze;
     char path;
+    char fill;
 
     int rowValue;
     int colValue;
@@ -18,26 +17,23 @@ public class MazeLogic {
         this.maze = new char[20][20];
 
         this.path = '0';
-        this.rowValue = 4;
-        this.colValue = 4;
+        this.fill = '-';
+        this.rowValue = 0;
+        this.colValue = 0;
     }
 
     // Methods
     public void run() {
         fillMaze();
+        makePath(); 
+        printMaze(); 
         
-        for (int i = 0; i < 5; i++) {
-            moveLeft();
-        }
-        
-        
-        printMaze();
     }
 
     private void fillMaze() {
         for (int row = 0; row < maze.length; row++) {
             for (int col = 0; col < maze[0].length; col++) {
-                maze[row][col] = '-';
+                maze[row][col] = fill;
             }
         }
     }
@@ -48,7 +44,7 @@ public class MazeLogic {
             for (int col = 0; col < maze[0].length; col++) {
                 System.out.print(maze[row][col] + "  ");
             }
-            System.out.println("\n");
+            System.out.println();
         }
     }
 
@@ -57,6 +53,43 @@ public class MazeLogic {
             return false;
         }
         return true;
+    }
+    
+    private void resetData(){
+        maze = null;
+    }
+
+    // Path making methods
+    private void makePath() {
+        Random r = new Random();
+        setStartCoordinates();
+
+        while (rowValue != 19) {
+            int chooseMovement = r.nextInt(4);
+
+            switch (chooseMovement) {
+                case 0:
+                    moveUp();
+                    break;
+                case 1:
+                    moveRight();
+                    break;
+                case 2:
+                    moveDown();
+                    break;
+                default:
+                    moveLeft();
+                    break;
+            }
+        }
+
+    }
+
+    private void setStartCoordinates() {
+        Random r = new Random();
+        colValue = r.nextInt(12) + 4;
+        placePath();
+        moveDown();
     }
 
     // MoveMethods
@@ -85,6 +118,55 @@ public class MazeLogic {
         if (isPlaceValid()) {
             colValue = colValue - 1;
             placePath();
+        }
+    }
+
+    // checkSurroundings
+    private boolean checkSurroundingsUp() {
+        int newRow, newCol;
+        newRow = rowValue - 1;
+        newCol = colValue;
+
+        if (maze[newRow][newCol] == fill && maze[newRow][newCol - 1] == fill && maze[newRow - 1][newCol - 1] == fill && maze[newRow - 1][newCol] == fill && maze[newRow - 1][newCol + 1] == fill && maze[newRow][newCol + 1] == fill) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean checkSurroundingsRight() {
+        int newRow, newCol;
+        newRow = rowValue;
+        newCol = colValue + 1;
+
+        if (maze[newRow][newCol] == fill && maze[newRow - 1][newCol] == fill && maze[newRow - 1][newCol + 1] == fill && maze[newRow][newCol + 1] == fill && maze[newRow + 1][newCol + 1] == fill && maze[newRow + 1][newCol] == fill) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean checkSurroundingsDown() {
+        int newRow, newCol;
+        newRow = rowValue + 1;
+        newCol = colValue;
+
+        if (maze[newRow][newCol] == fill && maze[newRow][newCol + 1] == fill && maze[newRow + 1][newCol + 1] == fill && maze[newRow + 1][newCol] == fill && maze[newRow + 1][newCol - 1] == fill && maze[newRow][newCol - 1] == fill) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean checkSurroundingsLeft() {
+        int newRow, newCol;
+        newRow = rowValue;
+        newCol = colValue - 1;
+
+        if (maze[newRow][newCol] == fill && maze[newRow - 1][newCol] == fill && maze[newRow + 1][newCol] == fill && maze[newRow + 1][newCol - 1] == fill && maze[newRow][newCol - 1] == fill && maze[newRow - 1][newCol - 1] == fill) {
+            return true;
+        } else {
+            return false;
         }
     }
 
