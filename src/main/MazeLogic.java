@@ -38,7 +38,9 @@ public class MazeLogic {
         }
     }
 
+    private void pathReady(){
     
+    }
     
     
     
