@@ -27,6 +27,7 @@ public class MazeLogic {
         fillMaze();
         makePath();
         printMaze();
+        resetData();
     }
 
     private void fillMaze() {
@@ -47,15 +48,58 @@ public class MazeLogic {
         }
     }
 
-    public boolean isPlaceValid() {
-        if ((rowValue - 1) == 0 || (colValue - 1) == 0 || (colValue + 1) == 19) {
-            return false;
+    public boolean isPlaceValid(int direction) {
+
+        // Checks up
+        if (direction == 1) {
+            if ((rowValue - 1) != 0) {
+                if (checkSurroundingsUp()) {
+                    return true;
+                }
+            }
         }
-        return true;
+
+        // Checks right
+        if (direction == 2) {
+            if ((colValue + 1) != 19) {
+                if (checkSurroundingsRight()) {
+                    return true;
+                }
+            }
+        }
+
+        // Checks down
+        if (direction == 3) {
+//            if ((rowValue + 1) != 19) {
+//                if (checkSurroundingsDown()) {
+                    return true;
+//                }
+//            }
+        }
+
+        // Checks left
+        if (direction == 4) {
+            if ((colValue - 1) != 0) {
+                if (checkSurroundingsLeft()) {
+                    return true;
+                }
+            }
+        }
+        
+        // As a defualt it returns false!
+        return false;
     }
 
     private void resetData() {
-        maze = null;
+
+        for (int row = 0; row < maze.length; row++) {
+            for (int col = 0; col < maze[0].length; col++) {
+                maze[row][col] = fill;
+            }
+        }
+
+        rowValue = 0;
+        colValue = 0;
     }
 
     // Path making methods
@@ -79,7 +123,6 @@ public class MazeLogic {
                 default:
                     moveLeft();
                     break;
-                    
             }
         }
 
@@ -94,44 +137,30 @@ public class MazeLogic {
 
     // MoveMethods
     private void moveUp() {
-        if (isPlaceValid()) {
-            if (checkSurroundingsUp()) {
-                rowValue = rowValue - 1;
-                placePath();
-            } else {
-                // ChangeDirection
-            }
+        if (isPlaceValid(1)) {
+            rowValue = rowValue - 1;
+            placePath();
         }
     }
 
     private void moveRight() {
-        if (isPlaceValid()) {
-            if (checkSurroundingsRight()) {
-                colValue = colValue + 1;
-                placePath();
-            } else {
-                // ChangeDirection
-            }
+        if (isPlaceValid(2)) {
+            colValue = colValue + 1;
+            placePath();
         }
     }
 
     private void moveDown() {
-        if (isPlaceValid()) {
-            if (checkSurroundingsDown()) {
-                rowValue = rowValue + 1;
-                placePath();
-            } else {
-                // ChangeDirection
-            }
+        if (isPlaceValid(3)) {
+            rowValue = rowValue + 1;
+            placePath();
         }
     }
 
     private void moveLeft() {
-        if (isPlaceValid()) {
-            if (checkSurroundingsLeft()) {
-                colValue = colValue - 1;
-                placePath();
-            }
+        if (isPlaceValid(4)) {
+            colValue = colValue - 1;
+            placePath();
         }
     }
 
