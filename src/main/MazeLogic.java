@@ -14,7 +14,7 @@ public class MazeLogic {
 
     // Constructor
     public MazeLogic() {
-        this.maze = new char[20][20];
+        this.maze = new char[100][100];
 
         this.path = '0';
         this.fill = '-';
@@ -42,7 +42,7 @@ public class MazeLogic {
 
         for (int row = 0; row < maze.length; row++) {
             for (int col = 0; col < maze[0].length; col++) {
-                System.out.print(maze[row][col] + "  ");
+                System.out.print(maze[row][col] + "");
             }
             System.out.println();
         }
@@ -61,7 +61,7 @@ public class MazeLogic {
 
         // Checks right
         if (direction == 2) {
-            if ((colValue + 1) != 19) {
+            if ((colValue + 1) != 99) {
                 if (checkSurroundingsRight()) {
                     return true;
                 }
@@ -107,21 +107,36 @@ public class MazeLogic {
         Random r = new Random();
         setStartCoordinates();
 
-        while (rowValue != 19) {
-            int chooseMovement = r.nextInt(4);
+        while (rowValue != 99) {
+            int chooseMovement = r.nextInt(9);
 
             switch (chooseMovement) {
                 case 0:
                     moveUp();
                     break;
                 case 1:
-                    moveRight();
+                    moveUp();
                     break;
                 case 2:
-                    moveDown();
+                    moveRight();
+                    break;
+                case 3:
+                    moveRight();
+                    break;
+                case 4:
+                    moveLeft();
+                    break;
+                case 5:
+                    moveLeft();
+                    break;
+                case 6:
+                    moveUp();
+                    break;
+                case 7:
+                    moveUp();
                     break;
                 default:
-                    moveLeft();
+                    moveDown();
                     break;
             }
         }
@@ -130,7 +145,7 @@ public class MazeLogic {
 
     private void setStartCoordinates() {
         Random r = new Random();
-        colValue = r.nextInt(12) + 4;
+        colValue = r.nextInt(50)+30;
         placePath();
         moveDown();
     }
